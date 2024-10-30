@@ -92,11 +92,14 @@ CREATE TABLE ArticleCategory (
     FOREIGN KEY (categoryId) REFERENCES Category(id)
 );
 
--- Table intermédiaire pour la relation ExternalPosts - Category
-CREATE TABLE ExternalPostCategory (
-    externalPostId INT,
-    categoryId INT,
-    PRIMARY KEY (externalPostId, categoryId),
-    FOREIGN KEY (externalPostId) REFERENCES ExternalPosts(id),
-    FOREIGN KEY (categoryId) REFERENCES Category(id)
+CREATE TABLE Settings (
+    id SERIAL PRIMARY KEY,
+    logo VARCHAR(255),                 -- Chemin ou URL vers le logo, optionnel
+    nom_marque VARCHAR(255) NOT NULL,  -- Nom de la marque
+    email VARCHAR(255) NOT NULL,       -- Adresse email
+    telephone VARCHAR(50),             -- Numéro de téléphone
+    adresse TEXT,                      -- Adresse complète
+    cle_api_openai VARCHAR(255),       -- Clé API OpenAI
+    lien_api_produits VARCHAR(255),    -- Lien de l'API des produits
+    lien_api_articles VARCHAR(255)     -- Lien de l'API des articles de blogs
 );

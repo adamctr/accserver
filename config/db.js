@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 require("dotenv").config();
 
 const sequelize = new Sequelize(
@@ -21,4 +21,7 @@ sequelize
   )
   .catch((error) => console.error("Unable to connect to the database:", error));
 
-module.exports = sequelize;
+module.exports = {
+  sequelize,
+  DataTypes,
+};
