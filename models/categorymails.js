@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('mailcategory', {
+  return sequelize.define('categorymails', {
     mailid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'mail',
+        model: 'mails',
         key: 'id'
       }
     },
@@ -15,18 +15,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'category',
+        model: 'categories',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'mailcategory',
+    tableName: 'categorymails',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "mailcategory_pkey",
+        name: "categorymails_pkey",
         unique: true,
         fields: [
           { name: "mailid" },

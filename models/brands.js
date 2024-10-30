@@ -1,35 +1,51 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('mail', {
+  return sequelize.define('brands', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    subject: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    structure: {
-      type: DataTypes.JSON,
-      allowNull: true
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    topic: {
+    logourl: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    type: {
-      type: DataTypes.STRING(50),
+    email: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
-    status: {
-      type: DataTypes.STRING(50),
+    phone: {
+      type: DataTypes.STRING(20),
       allowNull: true
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    openaiapikey: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    productapilink: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    blogarticlesapilink: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    userid: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     createdat: {
       type: DataTypes.DATE,
@@ -40,23 +56,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    authorid: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'itemtype',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
-    tableName: 'mail',
+    tableName: 'brands',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "mail_pkey",
+        name: "brands_pkey",
         unique: true,
         fields: [
           { name: "id" },

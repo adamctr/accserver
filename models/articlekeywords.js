@@ -1,36 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('articlecategory', {
+  return sequelize.define('articlekeywords', {
     articleid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'article',
+        model: 'articles',
         key: 'id'
       }
     },
-    categoryid: {
+    keywordid: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'category',
+        model: 'seokeywords',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'articlecategory',
+    tableName: 'articlekeywords',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "articlecategory_pkey",
+        name: "articlekeywords_pkey",
         unique: true,
         fields: [
           { name: "articleid" },
-          { name: "categoryid" },
+          { name: "keywordid" },
         ]
       },
     ]

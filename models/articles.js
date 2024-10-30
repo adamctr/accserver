@@ -1,19 +1,19 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('article', {
+  return sequelize.define('articles', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    topic: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
     title: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    topic: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     type: {
       type: DataTypes.STRING(50),
@@ -49,22 +49,30 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
+    brandid: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'brands',
+        key: 'id'
+      }
+    },
     itemtypeid: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'itemtype',
+        model: 'itemtypes',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'article',
+    tableName: 'articles',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "article_pkey",
+        name: "articles_pkey",
         unique: true,
         fields: [
           { name: "id" },

@@ -15,14 +15,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL,
       allowNull: true
     },
-    articleid: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'article',
-        key: 'id'
-      }
-    },
     ismainkeyword: {
       type: DataTypes.BOOLEAN,
       allowNull: true,

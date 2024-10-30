@@ -26,6 +26,14 @@ module.exports = function(sequelize, DataTypes) {
     categories: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    brandid: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'brands',
+        key: 'id'
+      }
     }
   }, {
     sequelize,

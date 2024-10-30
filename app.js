@@ -3,10 +3,12 @@ const app = express();
 const bodyParser = require("body-parser");
 const errorHandler = require("./middlewares/errorHandler"); // Middleware de gestion des erreurs
 const allRoutes = require("./routes/allRoutes.js");
+const cors = require("cors");
 //const articleRoutes = require("./routes/articleRoutes");
 const { sequelize } = require("./config/db"); // Initialisation de la connexion à la base de données
 
 // Configurations de base
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
