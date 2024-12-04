@@ -4,12 +4,12 @@ const { users } = sequelize.models;
 // Fonction pour créer un utilisateur
 exports.createUser = async (req, res) => {
   try {
-    const { usersname, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     const newusers = await users.create({
-      usersname,
+      username,
       email,
-      password, // Assurez-vous de hacher le mot de passe avant de le stocker en production
+      password,
       createdat: new Date(),
       updatedat: new Date(),
     });
@@ -24,8 +24,8 @@ exports.createUser = async (req, res) => {
 // Fonction pour récupérer tous les utilisateurs
 exports.getUsers = async (req, res) => {
   try {
-    const userss = await users.findAll();
-    res.status(200).json(userss);
+    const Users = await users.findAll();
+    res.status(200).json(Users);
   } catch (error) {
     console.error("Error in getuserss:", error);
     res.status(500).json({ message: "Error retrieving userss", error });
@@ -36,10 +36,10 @@ exports.getUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const users = await users.findOne({ where: { id } });
+    const Users = await users.findOne({ where: { id } });
 
-    if (!users) {
-      return res.status(404).json({ message: "users not found" });
+    if (!Users) {
+      return res.status(404).json({ message: "Users not found" });
     }
 
     res.status(200).json(users);

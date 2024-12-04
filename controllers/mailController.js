@@ -44,8 +44,8 @@ exports.createMail = async (req, res) => {
 exports.getAllMails = async (req, res) => {
   try {
     const { brandid } = req.params; // Utilise brandid depuis les paramètres
-    const mails = await mails.findAll({ where: { brandid } });
-    res.status(200).json(mails);
+    const Mails = await mails.findAll({ where: { brandid } });
+    res.status(200).json(Mails);
   } catch (error) {
     console.error("Error in getAllMails:", error);
     res.status(500).json({ message: "Error retrieving mails", error });
