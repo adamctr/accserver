@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const mailController = require("../controllers/mailController"); // Import du contrôleur
+const mailController = require("../controllers/mailController");
 
-// Route pour créer un nouveau mail
+// Route pour créer un email pour une brand spécifique
 router.post("/", mailController.createMail);
 
-// Route pour obtenir tous les mails
-router.get("/", mailController.getAllMails);
+// Route pour récupérer tous les emails d'une brand spécifique
+router.get("/:brandid", mailController.getAllMails);
 
-// Route pour obtenir un mail par ID
-router.get("/:id", mailController.getMailById);
+// Route pour récupérer un email spécifique d'une brand spécifique
+router.get("/:brandid/:id", mailController.getMailById);
 
-// Route pour mettre à jour un mail par ID
-router.put("/:id", mailController.updateMail);
+// Route pour mettre à jour un email spécifique d'une brand spécifique
+router.put("/:brandid/:id", mailController.updateMail);
 
-// Route pour supprimer un mail par ID
-router.delete("/:id", mailController.deleteMail);
+// Route pour supprimer un email spécifique d'une brand spécifique
+router.delete("/:brandid/:id", mailController.deleteMail);
 
 module.exports = router;

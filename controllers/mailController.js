@@ -1,7 +1,7 @@
-const { sequelize, DataTypes } = require("../config/db");
-const Mail = require("../models/mails")(sequelize, DataTypes); // Modèle Mail correspondant à la table "mails"
+const { sequelize } = require("../models/index");
+const { mails } = sequelize.models;
 
-// Créer un nouvel email
+// Créer un nouvel email pour une brand spécifique
 exports.createMail = async (req, res) => {
   try {
     const {
@@ -11,19 +11,24 @@ exports.createMail = async (req, res) => {
       topic,
       type,
       status,
-      brandId,
-      itemTypeId,
+      brandid, // Utilise brandid depuis le corps de la requête
+      itemtypeid,
     } = req.body;
 
-    const newMail = await Mail.create({
+    // Validation : Assurez-vous que brandid est fourni et n'est pas null
+    if (brandid === undefined || brandid === null) {
+      return res.status(400).json({ message: "Brand ID is required" });
+    }
+
+    const newMail = await mails.create({
       subject,
       structure,
       content,
       topic,
       type,
       status,
-      brandId,
-      itemTypeId,
+      brandid,
+      itemtypeid,
       createdat: new Date(),
       updatedat: new Date(),
     });
@@ -35,22 +40,23 @@ exports.createMail = async (req, res) => {
   }
 };
 
-// Récupérer tous les emails
-exports.getMails = async (req, res) => {
+// Récupérer tous les emails d'une brand spécifique
+exports.getAllMails = async (req, res) => {
   try {
-    const mails = await Mail.findAll();
+    const { brandid } = req.params; // Utilise brandid depuis les paramètres
+    const mails = await mails.findAll({ where: { brandid } });
     res.status(200).json(mails);
   } catch (error) {
-    console.error("Error in getMails:", error);
+    console.error("Error in getAllMails:", error);
     res.status(500).json({ message: "Error retrieving mails", error });
   }
 };
 
-// Récupérer un email par ID
+// Récupérer un email par ID pour une brand spécifique
 exports.getMailById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const mail = await Mail.findOne({ where: { id } });
+    const { brandid, id } = req.params;
+    const mail = await mails.findOne({ where: { id, brandid } });
 
     if (!mail) {
       return res.status(404).json({ message: "Mail not found" });
@@ -63,22 +69,14 @@ exports.getMailById = async (req, res) => {
   }
 };
 
-// Mettre à jour un email par ID
+// Mettre à jour un email par ID pour une brand spécifique
 exports.updateMail = async (req, res) => {
   try {
-    const { id } = req.params;
-    const {
-      subject,
-      structure,
-      content,
-      topic,
-      type,
-      status,
-      brandId,
-      itemTypeId,
-    } = req.body;
+    const { brandid, id } = req.params;
+    const { subject, structure, content, topic, type, status, itemtypeid } =
+      req.body;
 
-    const updatedMail = await Mail.update(
+    const updatedMail = await mails.update(
       {
         subject,
         structure,
@@ -86,11 +84,11 @@ exports.updateMail = async (req, res) => {
         topic,
         type,
         status,
-        brandId,
-        itemTypeId,
+        brandid,
+        itemtypeid,
         updatedat: new Date(),
       },
-      { where: { id }, returning: true }
+      { where: { id, brandid }, returning: true }
     );
 
     if (updatedMail[0] === 0) {
@@ -104,11 +102,11 @@ exports.updateMail = async (req, res) => {
   }
 };
 
-// Supprimer un email par ID
+// Supprimer un email par ID pour une brand spécifique
 exports.deleteMail = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deleted = await Mail.destroy({ where: { id } });
+    const { brandid, id } = req.params;
+    const deleted = await mails.destroy({ where: { id, brandid } });
 
     if (!deleted) {
       return res.status(404).json({ message: "Mail not found" });

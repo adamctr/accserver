@@ -1,4 +1,3 @@
-const Sequelize = require("sequelize");
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     "users",
@@ -26,12 +25,12 @@ module.exports = function (sequelize, DataTypes) {
       createdat: {
         type: DataTypes.DATE,
         allowNull: true,
-        defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: DataTypes.NOW,
       },
       updatedat: {
         type: DataTypes.DATE,
         allowNull: true,
-        defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: DataTypes.NOW,
       },
     },
     {

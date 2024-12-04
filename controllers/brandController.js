@@ -1,9 +1,9 @@
-const { sequelize, DataTypes } = require("../config/db");
-const Brand = require("../models/brands")(sequelize, DataTypes);
+const { sequelize } = require("../models/index");
+const { brands } = sequelize.models;
 
 exports.getBrands = async (req, res) => {
   try {
-    const brands = await Brand.findAll(); // Récupère toutes les marques
+    const brands = await brands.findAll(); // Récupère toutes les marques
     res.status(200).json(brands); // Renvoie les marques sous forme de JSON
   } catch (error) {
     console.error("Error in getBrands:", error); // Log d'erreur direct
@@ -14,7 +14,7 @@ exports.getBrands = async (req, res) => {
 exports.getBrandSettings = async (req, res) => {
   try {
     const { id } = req.params; // Récupérer l'ID de la marque à partir des paramètres de la requête
-    const brand = await Brand.findOne({ where: { id: id } });
+    const brand = await brands.findOne({ where: { id: id } });
 
     if (!brand) {
       return res.status(404).json({ message: "Brand not found" });
@@ -42,7 +42,7 @@ exports.addBrandSettings = async (req, res) => {
     } = req.body;
 
     // Créez une nouvelle marque
-    const newBrand = await Brand.create({
+    const newBrand = await brands.create({
       name,
       logourl,
       email,
