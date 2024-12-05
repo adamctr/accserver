@@ -1,14 +1,22 @@
 const express = require("express");
-const { DataTypes, Op } = require("Sequelize");
+const { DataTypes, Op } = require("sequelize");
 const app = express();
 const db = require("./models");
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 // Middleware pour parser les données JSON
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
 
 // Requires des routes
 const allRoutes = require("./routes/allRoutes");
